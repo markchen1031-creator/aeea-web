@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEEA AI賦能創業協會</title>
+    <!-- 載入 React 運行環境 -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- 載入 Babel 用於瀏覽器解析 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 載入 Lucide 圖標 -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        /* 隱藏 Google Sites 嵌入可能產生的滾動條 */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // 從全域變數獲取 Lucide 圖標組件
+        const { 
+            Rocket, BookOpen, Users, Globe, Lightbulb, Briefcase, 
+            ChevronRight, Menu, X, Building, User, CheckCircle2, 
+            Trophy, Target, ArrowUpRight, MessageCircle 
+        } = {
+            Rocket: (props) => <i data-lucide="rocket" {...props}></i>,
+            BookOpen: (props) => <i data-lucide="book-open" {...props}></i>,
+            Users: (props) => <i data-lucide="users" {...props}></i>,
+            Globe: (props) => <i data-lucide="globe" {...props}></i>,
+            Lightbulb: (props) => <i data-lucide="lightbulb" {...props}></i>,
+            Briefcase: (props) => <i data-lucide="briefcase" {...props}></i>,
+            ChevronRight: (props) => <i data-lucide="chevron-right" {...props}></i>,
+            Menu: (props) => <i data-lucide="menu" {...props}></i>,
+            X: (props) => <i data-lucide="x" {...props}></i>,
+            Building: (props) => <i data-lucide="building" {...props}></i>,
+            User: (props) => <i data-lucide="user" {...props}></i>,
+            CheckCircle2: (props) => <i data-lucide="check-circle-2" {...props}></i>,
+            Trophy: (props) => <i data-lucide="trophy" {...props}></i>,
+            Target: (props) => <i data-lucide="target" {...props}></i>,
+            ArrowUpRight: (props) => <i data-lucide="arrow-up-right" {...props}></i>,
+            MessageCircle: (props) => <i data-lucide="message-circle" {...props}></i>,
+        };
+
+        function App() {
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+            const [scrolled, setScrolled] = React.useState(false);
+            
+            const joinLink = "https://forms.gle/J5qguAenEgnro5uK8";
+            const lineLink = "https://lin.ee/q0sX3y8";
+
+            React.useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll);
+                // 初始化圖標
+                lucide.createIcons();
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // 每次渲染後重新渲染圖標
+            React.useEffect(() => {
+                lucide.createIcons();
+            });
+
+            const scrollToSection = (id) => {
+                setIsMenuOpen(false);
+                const element = document.getElementById(id);
+                if (element) {
+                    window.scrollTo({
+                        top: element.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+
+            const tasks = [
+                { icon: "book-open", color: "text-blue-500", title: "教育培訓", desc: "推動 AI 創業教育與培訓，培育具備實戰能力的創新人才。" },
+                { icon: "users", color: "text-indigo-500", title: "交流活動", desc: "舉辦創業論壇、講座及交流活動，建立緊密的社群網絡。" },
+                { icon: "briefcase", color: "text-cyan-500", title: "資源媒合", desc: "建立創業資源媒合平台，協助對接資金、技術與市場。" },
+                { icon: "globe", color: "text-blue-600", title: "跨境合作", desc: "促進跨境創業交流與合作，協助台灣新創走向國際舞台。" },
+                { icon: "rocket", color: "text-purple-500", title: "品牌建立", desc: "協助創業者建立穩健的商業模式與具影響力的品牌。" },
+                { icon: "lightbulb", color: "text-yellow-500", title: "產業發展", desc: "推動創新創業文化，促進 AI 科技於各產業的應用與升級。" },
+            ];
+
+            return (
+                <div className="min-h-screen bg-slate-50 text-slate-800">
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`}>
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                            <div className="flex items-center cursor-pointer group" onClick={() => scrollToSection('home')}>
+                                <div className="bg-blue-600 p-2 rounded-lg mr-3 group-hover:rotate-12 transition-transform">
+                                    <i data-lucide="rocket" className="w-6 h-6 text-white"></i>
+                                </div>
+                                <div>
+                                    <span className="font-bold text-xl md:text-2xl tracking-tight text-slate-900 block leading-none">AEEA</span>
+                                    <span className="text-[10px] md:text-xs text-blue-600 font-bold uppercase tracking-widest">AI Empowerment</span>
+                                </div>
+                            </div>
+                            <div className="hidden md:flex items-center space-x-8 font-bold">
+                                <button onClick={() => scrollToSection('about')} className="text-slate-600 hover:text-blue-600">關於我們</button>
+                                <button onClick={() => scrollToSection('missions')} className="text-slate-600 hover:text-blue-600">核心任務</button>
+                                <button onClick={() => scrollToSection('membership')} className="text-slate-600 hover:text-blue-600">會員制度</button>
+                                <a href={lineLink} target="_blank" className="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-full shadow-lg transition-transform hover:scale-105">LINE 諮詢</a>
+                                <a href={joinLink} target="_blank" className="bg-blue-600 hover:bg-blue-700 text-white px-7 py-2.5 rounded-full shadow-lg transition-transform hover:scale-105">立即入會</a>
+                            </div>
+                            <div className="md:hidden flex items-center">
+                                <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-slate-600 bg-slate-100 rounded-lg">
+                                    {isMenuOpen ? <i data-lucide="x"></i> : <i data-lucide="menu"></i>}
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <section id="home" className="relative pt-40 pb-24 md:pt-52 md:pb-40 px-4 overflow-hidden">
+                        <div className="max-w-5xl mx-auto text-center relative z-10">
+                            <div className="inline-flex items-center mb-6 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-200 text-blue-700 font-bold text-xs md:text-sm">
+                                <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-ping"></span>
+                                政府立案 • 非營利公益性社會團體
+                            </div>
+                            <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tight mb-8 leading-[1.1]">
+                                用 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">AI 賦能</span><br />
+                                開啟創業無限可能
+                            </h1>
+                            <p className="text-lg md:text-xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+                                我們致力於連結教育、科技與產業資源，打造最強大的 AI 創業生態圈。無論您是初創團隊還是尋求轉型的企業，AEEA 都是您最堅實的夥伴。
+                            </p>
+                            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+                                <a href={joinLink} target="_blank" className="w-full sm:w-auto px-10 py-5 bg-slate-900 hover:bg-black text-white rounded-2xl font-bold text-lg shadow-2xl flex items-center justify-center transition-transform hover:-translate-y-1">
+                                    立即加入協會 <i data-lucide="chevron-right" className="ml-2"></i>
+                                </a>
+                                <a href={lineLink} target="_blank" className="w-full sm:w-auto px-10 py-5 bg-white hover:bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-2xl font-bold text-lg shadow-md flex items-center justify-center transition-transform hover:-translate-y-1">
+                                    <i data-lucide="message-circle" className="w-6 h-6 mr-2 text-emerald-500"></i> LINE 專人諮詢
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="about" className="py-24 bg-white">
+                        <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row gap-16 items-center">
+                            <div className="flex-1">
+                                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800" className="rounded-[2rem] shadow-2xl h-[400px] w-full object-cover" />
+                            </div>
+                            <div className="flex-1">
+                                <div className="inline-block px-3 py-1 rounded-lg bg-blue-50 text-blue-600 font-bold text-sm mb-4">OUR STORY</div>
+                                <h2 className="text-4xl font-black text-slate-900 mb-8">連結科技與夢想的中堅力量</h2>
+                                <p className="text-lg text-slate-600 leading-relaxed mb-6 font-medium">
+                                    AI賦能創業協會 (AEEA) 是依法設立的公益性社會團體。在人工智慧時代，協助創業者掌握 AI 的力量，打破資訊門檻，共創價值。
+                                </p>
+                                <div className="space-y-4">
+                                    <div className="flex items-center font-bold text-slate-800">
+                                        <i data-lucide="check-circle-2" className="text-blue-600 mr-3"></i> 跨越技術與商業的鴻溝
+                                    </div>
+                                    <div className="flex items-center font-bold text-slate-800">
+                                        <i data-lucide="check-circle-2" className="text-blue-600 mr-3"></i> 建立資源共享的國際平台
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="missions" className="py-24 bg-slate-50">
+                        <div className="max-w-7xl mx-auto px-4">
+                            <div className="text-center mb-16">
+                                <h2 className="text-4xl font-black text-slate-900 mb-4">全方位的創業賦能計畫</h2>
+                                <p className="text-slate-600 font-bold">依據協會章程，我們提供以下六大核心維度支援</p>
+                            </div>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {tasks.map((task, i) => (
+                                    <div key={i} className="bg-white p-10 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-xl transition-all">
+                                        <div className={`w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-6 ${task.color}`}>
+                                            <i data-lucide={task.icon} className="w-8 h-8"></i>
+                                        </div>
+                                        <h3 className="text-2xl font-black mb-3">{task.title}</h3>
+                                        <p className="text-slate-600 font-medium leading-relaxed">{task.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="membership" className="py-24 bg-white">
+                        <div className="max-w-5xl mx-auto px-4 text-center">
+                            <h2 className="text-4xl font-black mb-4">加入 AEEA 會員</h2>
+                            <p className="text-slate-500 font-bold mb-16">成為推動 AI 創新的力量</p>
+                            <div className="grid md:grid-cols-2 gap-10">
+                                {/* 個人會員 */}
+                                <div className="border-2 border-slate-100 p-10 rounded-[2.5rem] text-left hover:border-blue-200 transition-colors">
+                                    <h3 className="text-3xl font-black mb-6 flex items-center"><i data-lucide="user" className="mr-3 text-blue-600"></i>個人會員</h3>
+                                    <div className="space-y-2 mb-8">
+                                        <div className="flex justify-between items-center text-slate-500 font-bold">
+                                            <span>入會費 (首次繳納)</span>
+                                            <span className="text-slate-900">NT$ 1,000</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-blue-600 font-black text-2xl">
+                                            <span>常年會費</span>
+                                            <span>NT$ 2,000 / 年</span>
+                                        </div>
+                                    </div>
+                                    <ul className="space-y-4 mb-10 font-bold text-slate-600">
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-emerald-500 mr-2 mt-1 w-4 h-4"></i> 優先參加各類 AI 創業講座</li>
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-emerald-500 mr-2 mt-1 w-4 h-4"></i> 專屬創業交流社群</li>
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-emerald-500 mr-2 mt-1 w-4 h-4"></i> 享有投票與選舉權利</li>
+                                    </ul>
+                                </div>
+                                {/* 團體會員 */}
+                                <div className="bg-slate-900 p-10 rounded-[2.5rem] text-left text-white shadow-2xl transform md:-translate-y-4">
+                                    <h3 className="text-3xl font-black mb-6 flex items-center"><i data-lucide="building" className="mr-3 text-yellow-400"></i>團體會員</h3>
+                                    <div className="space-y-2 mb-8">
+                                        <div className="flex justify-between items-center text-slate-400 font-bold">
+                                            <span>入會費 (首次繳納)</span>
+                                            <span className="text-white">NT$ 5,000</span>
+                                        </div>
+                                        <div className="flex justify-between items-center text-yellow-400 font-black text-2xl">
+                                            <span>常年會費</span>
+                                            <span>NT$ 10,000 / 年</span>
+                                        </div>
+                                    </div>
+                                    <ul className="space-y-4 mb-10 font-bold text-slate-300">
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-yellow-400 mr-2 mt-1 w-4 h-4"></i> 品牌 Logo 官方宣傳曝光</li>
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-yellow-400 mr-2 mt-1 w-4 h-4"></i> 可推派 1-3 名代表行使權利</li>
+                                        <li className="flex items-start"><i data-lucide="check-circle-2" className="text-yellow-400 mr-2 mt-1 w-4 h-4"></i> 專屬資源對接與產學合作</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
+                                <a href={joinLink} target="_blank" className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-xl shadow-xl transition-transform hover:scale-105">填寫申請表單</a>
+                                <a href={lineLink} target="_blank" className="bg-emerald-500 text-white px-10 py-5 rounded-2xl font-black text-xl shadow-xl transition-transform hover:scale-105">LINE 洽詢</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <footer className="bg-slate-900 text-white py-12 text-center border-t border-slate-800">
+                        <div className="flex justify-center items-center mb-6">
+                            <i data-lucide="rocket" className="text-blue-500 mr-2"></i>
+                            <span className="text-xl font-black">AEEA AI賦能創業協會</span>
+                        </div>
+                        <p className="text-slate-400 font-bold mb-4">推動 AI 創業教育 • 建立創業交流平台</p>
+                        <p className="text-slate-500 text-xs font-bold">&copy; 2026 AI賦能創業協會. All rights reserved.</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
